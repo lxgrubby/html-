@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>购物车</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            padding: 2em
+        }
+
+        #btn1 {
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<style>
+    body{
+        background-color: wheat;
+    }
+</style>
+<body>
+    <div id="uid"></div>
+    <hr>
+
+
+    <table class="table " style="width: 30%;">
+        <thead>
+            <tr>
+                <th><input type="checkbox" value="全选" id="all">全选</th>
+                <th>编号</th>
+                <th>商品</th>
+                <th>价格</th>
+                <th>数量</th>
+                <th>小计</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="cart">
+
+        </tbody>
+    </table>
+    <div id="sum">
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
+<script src="data.js"></script>
+<script>
+
+    //添加
+
+    //删除
+    function deleteTr(a) {
+        let tr = a.parentElement.parentElement;
+        let table = document.querySelector("#cart");
+        table.removeChild(tr);
+        getPrice();
+
+    }
+    let all = document.querySelector("#all");
+
+    window.onload = function () {
+
+        let id = localStorage.id;  //传值适用于少量的数据
+        let userid = sessionStorage.uid;
+        let u = users.find((user) => {
+            return user.id == userid;
+        });
+        console.log(id);
+
+        if (typeof u === "undefined") {
+            document.querySelector("#uid").innerHTML = "<a href='Login.html'>请登录</a>";
+        } else {
+            document.querySelector("#uid").innerHTML = u.name + "，欢迎您！<a href='javascript:exit()'>注销</a>";
+        }
+
+        //全选和取消
+        all.addEventListener('click', () => {  //点击了第一个多选框后再去获取
+            //下面全部被选中
+            let allCheck = document.getElementsByName("good");
+            for (let check of allCheck) {
+                check.checked = all.checked;
+            }
+            getPrice();//全选的时候，也要计算价格
+        });
+        //遍历products 如果id值和products.id相等则获取该数据添加到表格中
+        for (let product of products) {
+            if (id == product.id) {
+
+                let table = document.querySelector("#cart");
+                let tr = document.createElement("tr");
+                tr.innerHTML = '<td><input type="checkbox" onclick="allCheck()" name="good"></td><td class="id">' + product.id + '</td><td>' + product.pname + '</td><td>' + product.price + '</td><td>' + 1 + '</td><td class="num">' + product.price + '</td><td><a onclick="deleteTr(this)">删除</a></th>';
+                table.appendChild(tr);
+            }
+        }
+    }
+    //所有的多选框都应该有点击事件
+    //let goods = document.getElementsByName("good"); //加载script标签的时候去获取
+    //生成文档树的时候---页面中也有的标签生成文档树---这个时候还没有进行add方法执行，所以没有name为good的标签
+    //使用低三种和第二种方式给所有下面新添加的多选框添加点击事件不行
+    //要给新添加的标签添加事件，需要使用第一种方式
+    function allCheck() {  //如果触发这个方法表示下面已经有新添加的标签放到文档树上
+        let goods = document.getElementsByName("good");
+        // console.log(goods);
+        all.checked = true;
+        for (let good of goods) {
+            if (!good.checked) {
+                all.checked = false;
+            }
+        }
+        getPrice();  //每次多选框点击的时候计算价格
+    }
+
+
+    //计算价格，在点击多选框的时候，找出所有被选中的多选框，然后找出他的价格，每点击一次计算一次
+    function getPrice() {
+        let goods = document.getElementsByName("good");
+        let sum = 0;
+        for (let good of goods) {
+            if (good.checked) {//被选中，就找他这个商品的价格
+                let td = good.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling;
+                let price = td.innerText;
+                sum += parseFloat(price);
+            }
+        }
+        document.querySelector("#sum").innerHTML = (sum + "").fontcolor("red");
+    }
+//登陆的用户注销，进入productlist界面为请登录
+    function exit(){
+ sessionStorage.uid = null;
+location.href = "productslist.html";
+}
+
+
+
+
+
+</script>

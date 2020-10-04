@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>商品列表</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<style>
+  .top {
+    width: 100%;
+    height: 50px;
+    background-color: wheat;
+    margin-bottom: 0.5em;
+
+  }
+
+  .card-body {
+    background-color: darkorange;
+    height: 200px;
+
+  }
+
+  body {
+    background-color: aquamarine;
+  }
+
+  .main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -5em;
+    margin-left: -9em;
+    width: 18em;
+    height: 10em;
+
+  }
+
+  .img-fluid {
+ 
+    height: auto;
+    width: 100%;
+
+  }
+ 
+</style>
+
+<body>
+  <div class="top" style="line-height: 50px; font-size: 20px">
+  </div>
+  <div class="container">
+    <!-- 轮播 -->
+    <div id="carouselId" class="carousel slide" data-ride="carousel">
+      <!-- 标识 -->
+      <ol class="carousel-indicators">
+        <li data-target="#carouselId" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselId" data-slide-to="1"></li>
+        <li data-target="#carouselId" data-slide-to="2"></li>
+      </ol>
+      <!-- 轮播项 -->
+      <div style="height: 300px;" class="carousel-inner" role="listbox">
+        <!-- h-100 height:100% -->
+        <div class="carousel-item active h-100">
+          <!-- 图片 -->
+          <a href="http:www.jd.com">
+            <img class="img-fluid" src="img/木兰花令.png" data-src="holder.js/900x500/auto/#777:#555/text:First slide"
+              alt="First slide">
+          </a>
+          <!-- 描述 -->
+          <div class="carousel-caption text-danger ">
+            <h3>木兰花令</h3>
+            <p>人生若只如初见</p>
+          </div>
+        </div>
+        <div class="carousel-item h-100">
+          <img class="img-fluid" src="img/思考.png" data-src="holder.js/900x500/auto/#666:#444/text:Second slide"
+            alt="Second slide">
+          <div class="carousel-caption d-none d-md-block">
+            <h3>思考下人生</h3>
+            <p>书城是你的归宿</p>
+          </div>
+        </div>
+        <div class="carousel-item h-100">
+          <img class="img-fluid" src="img/将军.png" data-src="holder.js/900x500/auto/#666:#444/text:Third slide"
+            alt="Third slide">
+          <div class="carousel-caption d-none d-md-block">
+            <h3>铁马兵戈</h3>
+            <p>书中点万兵</p>
+          </div>
+        </div>
+      </div>
+      <!-- 前 后 -->
+      <a class="carousel-control-prev" href="#carouselId" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselId" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    <!-- 轮播 -->
+  </div>
+  <!-- 页脚 -->
+  <!-- <footer id="footer">
+      <span>copyright 2017 &copy; striner All Rights RESERVED</span>
+    </footer> -->
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
+<script src="data.js"></script>
+
+<script>
+  window.onload = function () {
+    // 商品展示区
+    for (let product of products) {//遍历数组，获取里面的每一个商品对象
+      let div = document.createElement("div");
+      div.setAttribute("class", "card text-white bg-primary");
+      div.style.width = "300px";
+      div.style.height = "400px";
+      div.style.display = "inline-block";
+      div.style.verticalAlign = "top";
+      div.style.margin = "4em";
+      div.innerHTML = '<img class="card-img-top" src="' + product.imgUrl + '" alt=""><div class="card-body"><h4 class="card-title">' + product.pdesc + '</h4><p class="card-text">价格：' + product.price + ' </p></div>';
+      document.querySelector("body").appendChild(div);
+      //给每一个div添加一个点击事件
+      div.addEventListener('click', () => {
+        //商品整个传过去，传递商品的id，你可以通过id找到对象
+        // localStorage.setItem("id",product.id);//给商品的id去个名字叫id，到其他界面获取的时候，图片通过名字取值
+        localStorage.id = product.id; //传商品id
+        window.location.href = "productItem.html";
+        // localStorage.setItem("pro", {x:1});//把对象赋值给p,json格式的  //传对象
+        localStorage.pro = product;
+      })
+    }
+
+    //获取用户信息
+    let userid = sessionStorage.uid;
+    let u = users.find((user) => {
+      return user.id == userid;
+    });
+    if (typeof u === "undefined") { //有没有登陆，没有登陆就是请登录
+      document.querySelector("div").innerHTML = "<a href='Login.html' >请登录</a>";
+    } else {
+      document.querySelector("div").innerHTML = u.name + "，欢迎您！<a href='javascript:exit()' >注销</a>";
+
+    }
+  }
+  //登陆的用户注销，进入productslist界面为请登录
+  
+  function exit() {
+    sessionStorage.uid = null;  // localStorage：存在本地，就算浏览器关闭也会存在      sessionStorage:浏览器打开到浏览器关闭
+    location.href = "productslist.html";  //重新跳转--某个页面会再次加载（刷新）
+  }
+
+
+</script>

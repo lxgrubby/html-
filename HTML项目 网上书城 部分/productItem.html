@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>商品详情</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<style>
+  /* .top-div {
+    width: 100%;
+    height: 70px;
+    background-color: chartreuse;
+  } */
+  .card-body {
+    background-color: darkorange;
+    height: 170px;
+
+  }
+  footer {
+    text-align: center;
+    background-color: brown;
+    color: aliceblue;
+    padding: 1em;
+    font-size: 0.7em;
+    /* 固定 */
+    position: fixed;
+    /* position: absolute; */
+    width: 100%;
+    bottom: 0;
+    height: 60px;
+  }
+  button {
+    width: 50px;
+    height: 50px;
+    float: right;
+  }
+  .top{
+    background-color: wheat;
+    height: 30px;
+  }
+</style>
+
+<body>
+  <div class="top">
+    
+  </div>
+
+  <footer>
+    <button id="shopp"onclick="a()">
+      添加到购物车
+    </button>
+
+  </footer>
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
+<script src="data.js"></script>
+<script>
+  window.onload = function(){
+  let shopp=document.querySelector("#shopp");
+  console.log(shopp);
+  
+
+  let id = localStorage.id;  //传值适用于少量的数据
+  let product = products.find((p)=>{ //数组遍历出来的每一个对象叫做p
+     if( p.id == id){
+         return p;
+     } //返回商品的id值和我相同的商品
+     return null;
+     //整合  return p.id == id;
+  });
+
+  //展示单个商品对象
+  let div = document.createElement("div");
+  div.setAttribute("class","card text-white bg-primary");
+  div.style.width = "300px";
+  div.style.height = "350px";
+  div.innerHTML = '<img class="card-img-top" src="'+product.imgUrl+'" alt=""><div class="card-body"><h4 class="card-title">'+product.pdesc+'</h4><p class="card-text">价格:'+product.price+' </p></div>';
+  document.querySelector("body").appendChild(div);
+  
+
+  //用户信息
+  let userid =  sessionStorage.uid;
+  let u = users.find((user)=>{
+    return user.id == userid;
+  });
+  if(typeof u ==="undefined"){
+    document.querySelector(".top").innerHTML = "<a href='Login.html'>请登录</a>";
+  }else{
+    document.querySelector(".top").innerHTML = u.name+"，欢迎您！<a href='javascript:exit()'>注销</a>";
+  }
+}
+//登陆的用户注销，进入productlist界面为请登录
+function exit(){
+ sessionStorage.uid = null;
+//1.后台管理--全部是退出到登陆界面
+//2.淘宝，京东---退出到主界面--不登录也可以进行查看
+location.href = "productslist.html";
+}
+// 添加购物车a方法：如果sessionStorage.uid==="null" 那么弹出提示请先登录 然后跳转回登录界面 如果u有值 则跳转到购物车界面
+function a(){
+  if( (sessionStorage.uid==="null")||(sessionStorage.uid==="undefined") ){
+    alert("请先登录");
+    location.href = "login.html";
+    localStorage.id = product.id;
+    localStorage.pro = product;
+  }else{
+    location.href="shopping.html";
+  }
+    }
+    console.log(sessionStorage.uid);
+</script>

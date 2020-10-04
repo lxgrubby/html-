@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册界面</title>
+</head>
+<style>
+    body{
+        
+            background: url("./img/星空背景图片.png");
+			background-repeat: no-repeat;
+			/* 当内容高度大于图片高度时，背景图像的位置相对于viewport固定 */    
+			background-attachment: fixed;  /*此条属性必须设置否则可能无效*/    
+			/* 让背景图基于容器大小伸缩 */   
+			background-size: cover;  
+			/* 设置背景颜色，背景图加载过程中会显示背景色 */   
+			background-color: #CCCCCC;
+		
+    }
+    input {
+        display: block;
+    }
+    form{
+       
+        /* margin:0 auto; */
+        margin-left: 590px;
+        /* margin: auto; */
+      
+        width:300px;height:100px
+    }
+    #user_reg{
+			font-family: 微软雅黑;
+			font-size: 40px;
+			text-align: center;
+			margin-top: 100px;
+		}
+</style>
+
+<body >
+        <div id="user_reg">用户注册</div>
+   
+    <form action="login.html" method="get" onsubmit="return login()">
+        <div>
+            <label for="">账号</label>
+            <input type="text" name="account" id="account"><span id="accountSpan" name="accountSpan"></span>
+        </div>
+        <div>
+            <label for="">密码</label>
+            <input type="text" name="pwd" id="pwd"> <span id="pwdSpan" name="pwdSpan"></span>
+        </div>
+        <div>
+            <label for="">再次输入密码</label>
+            <input type="text" name="pwd2" id="pwd2"><span id="pwd2Span" name="pwd2Span"></span>
+        </div>
+        <div>
+            <label for="">年龄</label>
+            <input type="text" name="age" id="age"> <span id="ageSpan" name="ageSpan"></span>
+        </div>
+        <div>
+            <label for="">邮箱</label>
+            <input type="text" name="mail" id="mail"><span id="mailSpan" name="mailSpan"></span>
+        </div>
+        <div>
+            <label for="">名字</label>
+            <input type="text" name="name" id="name"><span id="nameSpan" name="nameSpan"></span>
+        </div>
+        <input type="submit" value="注册">
+        <button id="back">返回</button>
+
+    </form>
+</body>
+<script>
+    function login() {
+        let account = document.querySelector("#account");
+        if (!(/^[a-zA-Z]\w{5,11}/.test(account.value))) {
+            document.querySelector("#accountSpan").innerHTML = "该账号不符合要求".fontcolor("red");
+            account.value = "";
+            return false
+        }
+        let pwd = document.querySelector("#pwd");
+        if (!(/^[a-z0-9]{6,12}$/i.test(pwd.value))) {
+            document.querySelector("#pwdSpan").innerHTML = "密码不符合要求".fontcolor("red");
+            pwd.value = "";
+            return false
+        }
+        if (!(pwd.value == pwd2.value)) {
+            document.querySelector("#pwd2Span").innerHTML = "两次密码不一致".fontcolor("red");
+            pwd2.value = "";
+            return false
+        }
+        let age = document.querySelector("#age");
+        if (!(age.value >= 0 && age.value <= 120)) {
+            document.querySelector("#ageSpan").innerHTML = "年龄输入格式错误".fontcolor("red");
+            age.value = "";
+            return false
+        }
+        let mail = document.querySelector("#mail");
+        if (!(/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(mail.value))) {
+            document.querySelector("#mailSpan").innerHTML = "邮箱格式错误".fontcolor("red");
+            mail.value = "";
+            return false
+        }
+        let name = document.querySelector("#name");
+        if (!(/^[\u4e00-\u9fa5]{2,5}$/.test(name.value))) {
+            document.querySelector("#nameSpan").innerHTML = "名字输入格式错误".fontcolor("red");
+            name.value = "";
+            return false
+        }
+        return true
+
+    }
+    
+    document.querySelector("#back").addEventListener('click', () => {
+        window.location.href = "login.html";
+    });
+
+</script>
+
+</html>

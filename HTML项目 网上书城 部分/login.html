@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>login</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<style>
+  .circle {
+    background-color: brown;
+    color: aliceblue;
+    display: inline;
+    border-radius: 16px;
+    padding: 0 .7em;
+    /* 绝对的 */
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  .jumbotron {
+    background-color: chartreuse;
+  }
+</style>
+
+<body>
+  <!-- 展板 -->
+  <div class="jumbotron">
+    <h1 class="display-3">线上书城平台</h1>
+  </div>
+  <!-- 登录控件 -->
+  <form class="form" action="productslist.html" method="get" onsubmit="return login1()">
+    <div>
+      <label for="">账号</label>
+      <input type="text" name="account" id="account"><span id="accountSpan" name="accountSpan"></span>
+    </div>
+    <div>
+      <label for="">密码</label>
+      <input type="text" name="pwd" id="pwd"> <span id="pwdSpan" name="pwdSpan"></span>
+    </div>
+    <input type="submit" value="登陆">
+  </form>
+  <button id="register">注册</button>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
+<script src="data.js"></script>
+<script>
+  function login1() {
+    let account = document.querySelector("#account");
+    let pwd = document.querySelector("#pwd");
+    let flag = false;
+    for (let v of users) {
+      if ((account.value == v.loginName) && (pwd.value == v.cipher)) {
+        account.value = "";
+        pwd.value = "";
+        sessionStorage.uid = v.id;
+        flag = true;
+      }
+    }
+
+    return flag;
+
+
+  }
+  document.querySelector("#register").addEventListener('click', () => {
+    window.location.href = "register.html";
+  })
+
+  // let onsubmit=document.querySelector("form").onsubmit;
+
+  //    console.log(onsubmit);
+
+
+</script>
